@@ -14,6 +14,8 @@ import com.crud.demo.dto.WithdrawalResponse;
 import com.crud.demo.model.Transaction;
 import com.crud.demo.model.Withdrawal;
 import com.crud.demo.service.TransactionService;
+import com.crud.demo.util.JwtUtil;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,6 +28,10 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+
+    @Autowired
+    private JwtUtil jwtUtil; 
+
     @PostMapping("/topup")
     public ResponseEntity<?> topUp(@RequestBody TopUpRequest request,@RequestHeader(value = "Authorization") String token) {
          if (token.startsWith("Bearer ")) {
@@ -36,6 +42,19 @@ public class TransactionController {
             if (token == null || token.isEmpty()) {
                 return ResponseEntity.status(401).body("JWT token cannot be null or empty");
             }
+
+             String role = jwtUtil.extractRole(token);
+
+
+
+        System.out.println("Role auth: " + role);
+
+
+        // Validate role from auth
+        if(!role.equalsIgnoreCase("ROLE_FINANCE")){
+          return ResponseEntity.status(400).body("Invalid role. Only ADMIN or FINANCE are allowed."); 
+        }
+
 
             Transaction response = transactionService.processTopUp(request,token);
  
