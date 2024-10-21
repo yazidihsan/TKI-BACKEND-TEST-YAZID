@@ -179,7 +179,9 @@ In case Swagger is disabled in your environment, make sure the following depende
       swagger-ui:
         enabled: true
     ```
-
+    Each ENDPOINT using bearer token after auth.. it has to add authorization on swagger settings based on login.
+   ** If You want to add role to register auth with "ROLE_ADMIN" or "ROLE_FINANCE", you only need to use "ADMIN" or "FINANCE" to fill request body in register auth and it will be "ROLE_ADMIN" and "ROLE_FINANCE" in value of the key for role object ** 
+    
     This will ensure that Swagger UI is correctly configured and accessible.
 
 ---
