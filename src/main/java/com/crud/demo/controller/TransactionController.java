@@ -52,7 +52,7 @@ public class TransactionController {
 
         // Validate role from auth
         if(!role.equalsIgnoreCase("ROLE_FINANCE")){
-          return ResponseEntity.status(400).body("Invalid role. Only ADMIN or FINANCE are allowed."); 
+          return ResponseEntity.status(400).body("Invalid role. Only  FINANCE are allowed."); 
         }
 
 
