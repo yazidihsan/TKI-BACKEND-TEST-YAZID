@@ -1,6 +1,5 @@
 package com.crud.demo.dto;
-
-import java.time.LocalDateTime;
+ 
 
 public class RegisterRequest {
     
@@ -9,22 +8,8 @@ public class RegisterRequest {
     private String nama;
     private String email;
     private String role;
-    private String phone;
-    // private LocalDateTime createdAt = LocalDateTime.now();
-    // private String createdBy;
-
-    // public LocalDateTime getCreatedAt() {
-    //     return createdAt;
-    // }
-    // public void setCreatedAt(LocalDateTime createdAt) {
-    //     this.createdAt = createdAt;
-    // }
-    // public String getCreatedBy() {
-    //     return createdBy;
-    // }
-    // public void setCreatedBy(String createdBy) {
-    //     this.createdBy = createdBy;
-    // }
+    private String phone; 
+ 
     public String getUsername() {
         return username;
     }

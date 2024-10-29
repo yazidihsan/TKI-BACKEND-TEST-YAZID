@@ -1,6 +1,8 @@
 package com.crud.demo.config;
  
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +16,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        .csrf(csrf -> csrf.disable())  
+        .csrf(AbstractHttpConfigurer::disable)
             .headers(headers -> headers
-                .cacheControl(cache -> cache.disable())      // Disable cache-control headers
-                .frameOptions(frameOptions -> frameOptions.sameOrigin()) // Allow frames from the same origin
-                .xssProtection(xss -> xss.disable())        // Disable XSS protection (careful with this!)
+                .cacheControl(HeadersConfigurer.CacheControlConfig::disable)      // Disable cache-control headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin) // Allow frames from the same origin
+                .xssProtection(HeadersConfigurer.XXssConfig::disable)        // Disable XSS protection (careful with this!)
             )
           .authorizeHttpRequests(authorize -> authorize
                 // .requestMatchers("/api/users/**").authenticated()  

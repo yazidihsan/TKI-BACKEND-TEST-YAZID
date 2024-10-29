@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.crud.demo.model.User;
 import com.crud.demo.dto.UserDto;
-import com.crud.demo.repository.UserRepository;
-import com.crud.demo.util.JwtUtil;
+import com.crud.demo.repository.UserRepository; 
 
 @Service
 public class UserService {

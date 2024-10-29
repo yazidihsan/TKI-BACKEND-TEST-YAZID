@@ -5,7 +5,6 @@ import com.crud.demo.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.crud.demo.config.SecurityConfig;
 import com.crud.demo.controller.UserController;
-import com.crud.demo.dto.LoginRequest;
 import com.crud.demo.dto.UserDto;
 import com.crud.demo.model.User;
 
@@ -28,11 +27,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -40,10 +36,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -91,8 +84,7 @@ public void setUp() {
   
 
 }
-
-
+ 
 
     @Test
     public void testGetAllUsers() throws Exception {
