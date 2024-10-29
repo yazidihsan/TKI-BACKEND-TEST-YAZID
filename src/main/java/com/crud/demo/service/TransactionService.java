@@ -60,9 +60,12 @@ public class TransactionService {
         String kode = generateTransactionCode();
         transaction.setKode(kode);
 
-        
+        BigDecimal currentSaldo = user.get().getSaldo();
+        if(currentSaldo == null){
+            currentSaldo = BigDecimal.ZERO;
+        }
         //Update user saldo
-        user.get().setSaldo(user.get().getSaldo().add(transaction.getTotal()));
+        user.get().setSaldo(currentSaldo.add(transaction.getTotal()));
         
         userRepository.save(user.get());
         

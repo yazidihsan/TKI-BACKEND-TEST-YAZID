@@ -77,6 +77,17 @@ public class TransactionController {
                 return ResponseEntity.status(401).body("JWT token cannot be null or empty");
             }
 
+            String role = jwtUtil.extractRole(token);
+            System.out.println("Role auth: " + role);
+
+
+            // Validate role from auth
+            if(!role.equalsIgnoreCase("ROLE_FINANCE")){
+              return ResponseEntity.status(400).body("Invalid role. Only  FINANCE are allowed."); 
+            }
+
+
+
             Withdrawal response  = transactionService.processWithdrawal(request, token);
 
 

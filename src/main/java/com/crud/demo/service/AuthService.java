@@ -27,29 +27,34 @@ public class AuthService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public User register(User user) {
-
+    public User register(String username, String password, String nama, String email, String role, String phone) {
+        User user = new User();
         Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
-
+        // User user = existingUser.get();
         if(existingUser.isPresent()){
             throw new RuntimeException("Username already exists");
         }
+        user.setUsername(username);
 
         existingUser = userRepository.findByEmail(user.getEmail());
 
         if(existingUser.isPresent()){
             throw new RuntimeException("Email already exists");
         }
+        user.setEmail(email);
 
-        if("ADMIN".equals(user.getRole())){
-            user.setRole("ROLE_ADMIN");
-        }else if("FINANCE".equals(user.getRole())){
-            user.setRole("ROLE_FINANCE");
+        user.setNama(nama);
+
+        if("ADMIN".equals(role)){
+            user.setRole("ROLE_ADMIN"); 
+        }else if("FINANCE".equals(role)){
+            user.setRole("ROLE_FINANCE"); 
         }
 
-        // Hash the password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        // Hash the password before saving
+        user.setPassword(passwordEncoder.encode(password));
+        user.setPhone(phone);
         user.setCreatedAt(LocalDateTime.now());
         user.setCreatedBy("system"); 
 

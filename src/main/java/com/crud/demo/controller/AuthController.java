@@ -3,13 +3,14 @@ package com.crud.demo.controller;
 
 import java.util.Optional;
 
-
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.web.bind.annotation.RequestMapping; 
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crud.demo.dto.AuthResponse;
 import com.crud.demo.dto.LoginRequest;
+import com.crud.demo.dto.RegisterRequest;
 import com.crud.demo.dto.UpdatePasswordRequest;
 import com.crud.demo.model.User;
 import com.crud.demo.service.AuthService;
@@ -37,9 +38,33 @@ public class AuthController {
     }
 
      @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
         try {
-            User registeredUser = authService.register(user);
+            // Validate input
+            if(registerRequest.getUsername() == null || registerRequest.getUsername().isEmpty()){
+                return ResponseEntity.badRequest().body(new AuthResponse(400, "Username is required", null));
+            }
+
+            if (registerRequest.getPassword() == null || registerRequest.getPassword().isEmpty()) {
+                return ResponseEntity.badRequest().body(new AuthResponse(400, "Password is required", null));
+            }
+
+            if(registerRequest.getNama() == null || registerRequest.getNama().isEmpty()){
+                return ResponseEntity.badRequest().body(new AuthResponse(400, "Name is required", null));
+            }
+
+            if(registerRequest.getEmail() == null || registerRequest.getEmail().isEmpty()){
+                return ResponseEntity.badRequest().body(new AuthResponse(400, "Email is required", null));
+            }
+
+            if(registerRequest.getRole() == null || registerRequest.getRole().isEmpty()){
+                return ResponseEntity.badRequest().body(new AuthResponse(400, "Role is required", null));
+            }
+
+            if(registerRequest.getPhone() == null || registerRequest.getPhone().isEmpty()){
+                return ResponseEntity.badRequest().body(new AuthResponse(400, "Phone is required", null));
+            }
+            User registeredUser = authService.register(registerRequest.getUsername(),registerRequest.getPassword(),registerRequest.getNama(),registerRequest.getEmail(),registerRequest.getRole(),registerRequest.getPhone());
 
             return ResponseEntity.ok(new AuthResponse(201, "Berhasil Register", registeredUser)); // 201 Created
         } catch (RuntimeException e) {
