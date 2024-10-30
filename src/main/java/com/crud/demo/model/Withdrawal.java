@@ -1,16 +1,21 @@
 package com.crud.demo.model;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
 
-@Document(collection = "withdrawals")
+//@Document(collection = "withdrawals")
+@Entity
+@Table(name = "withdrawals")
 public class Withdrawal {
+//    @Id
     @Id
-    private String id;
-    private String transactionCode; // Similar to TopUp transaction code 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String transactionCode; // Similar to TopUp transaction code
+    @Column(name = "user_id",nullable = false)
     private String userId; // ID of the user making the withdrawal
     private LocalDateTime transactionDate;
     private BigDecimal amount;
@@ -33,10 +38,10 @@ public class Withdrawal {
     //     this.createdAt = createdAt;
     // }
     
-    public String getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getUserId() {

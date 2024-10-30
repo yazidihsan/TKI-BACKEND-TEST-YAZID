@@ -135,7 +135,7 @@ public class UserController {
             return userService.getUsers(page, size, sortField, sortDirection,token);
             
         } catch (Exception e) {
-            return Page.empty(null);
+            return Page.empty();
         }
     }
     

@@ -13,7 +13,9 @@ import com.crud.demo.model.User;
 public interface UserRepository extends MongoRepository<User,String>{
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
-    Page<User> findAll(Pageable pageable);
+
+     Page<User> findAll(Pageable pageable);
+
     Optional<User> findByRole(String role);
     Optional<User> findById(String id);
 }

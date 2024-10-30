@@ -1,16 +1,22 @@
 package com.crud.demo.model;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+//import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
-@Document(collection = "transactions")
+//@Document(collection = "transactions")
+@Entity
+@Table(name = "transactions")
 public class Transaction {
+//    @Id
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String kode;
-    private LocalDateTime transactionDate;    
+    private LocalDateTime transactionDate;
+    @Column(name = "user_id",nullable = false)
     private String userId;
     private String keterangan;
     private BigDecimal amount;
@@ -19,13 +25,14 @@ public class Transaction {
     private LocalDateTime createdAt;
     private String createdBy;
 
-    
 
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
     public String getKode() {
         return kode;

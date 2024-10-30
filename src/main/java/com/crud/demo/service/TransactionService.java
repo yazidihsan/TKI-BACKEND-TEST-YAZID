@@ -36,11 +36,13 @@ public class TransactionService {
         // Log the token for audit purposes
         System.out.println("Authorization Token: " + token);
 
-        Optional<User> user = userRepository.findById(request.getUserId());
+        Optional<User> existingUser = userRepository.findById(request.getUserId());
 
-        if(!user.isPresent()){
-            throw new RuntimeException("User not found");
+        if(existingUser.isEmpty()){
+            throw new RuntimeException("User not found in MongoDB with id: " + request.getUserId());
         }
+
+        User user = existingUser.get();
 
         if(request.getAmount().compareTo(BigDecimal.valueOf(5000)) < 0){
             throw new RuntimeException("Minimum amount is 5000");
@@ -48,26 +50,26 @@ public class TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setTransactionDate(LocalDateTime.now());
-        transaction.setUserId(request.getUserId());
+        transaction.setUserId(user.getId());
         transaction.setKeterangan(request.getKeterangan());
         transaction.setAmount(request.getAmount());
         transaction.setAdmin(request.getAmount().multiply(BigDecimal.valueOf(0.10)));
         transaction.setTotal(request.getAmount().subtract(transaction.getAdmin()));
         transaction.setCreatedAt(LocalDateTime.now());
-        transaction.setCreatedBy(user.get().getUsername());
+        transaction.setCreatedBy(user.getUsername());
 
         //Generate kode
         String kode = generateTransactionCode();
         transaction.setKode(kode);
 
-        BigDecimal currentSaldo = user.get().getSaldo();
+        BigDecimal currentSaldo = user.getSaldo();
         if(currentSaldo == null){
             currentSaldo = BigDecimal.ZERO;
         }
         //Update user saldo
-        user.get().setSaldo(currentSaldo.add(transaction.getTotal()));
+        user.setSaldo(currentSaldo.add(transaction.getTotal()));
         
-        userRepository.save(user.get());
+        userRepository.save(user);
         
         
         return transactionRepository.save(transaction);

@@ -141,6 +141,8 @@ public class UserService {
 
      // Log the token for audit purposes
         System.out.println("Authorization Token: " + token);
+
+
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
         Pageable pageable = PageRequest.of(page, size, sort);
         return userRepository.findAll(pageable);
