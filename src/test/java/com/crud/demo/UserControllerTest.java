@@ -86,41 +86,41 @@ public void setUp() {
 }
  
 
-//    @Test
-//    public void testGetAllUsers() throws Exception {
-//
-//        User user1 = new User("6713fdd5c84f3816afd57d27", "nama", "871356389483004", "nama@gmail.com", "ROLE_ADMIN", "nama", "$2a$10$cTHkcddryf1h7F2Y7ETCDu4qgv21ecEVnxz5rzom0IQjU3vRYW2rq");
-//        User user2 = new User("6713fe41c84f3816afd57d2a", "namaku", "871356389483004", "namaku@gmail.com", "ROLE_FINANCE", "namaku", "n3004");
-//        User user3 = new User("1", "yazid ihsan", "085701701721", "yazidihsan1@gmail.com", "ROLE_ADMIN", "yazid", "RahasiaDong123!@");
-//
-//        String jwtToken = jwtUtil.generateToken(user3.getUsername(),user3.getRole());
-//        RequestBuilder request = MockMvcRequestBuilders.get("/api/users")
-//             .header("Authorization","Bearer " + jwtToken)
-//             .param("page", "0")
-//             .param("size", "10")
-//             .param("sortField", "nama")
-//             .param("sortDirection", "ASC")
-//             .accept(MediaType.APPLICATION_JSON)
-//             .contentType(MediaType.APPLICATION_JSON);
-//
-//             List<User> users = Arrays.asList(user1,user2,user3);
-//
-//        usersPage = new PageImpl<>(users, PageRequest.of(0, 10), users.size());
-//
-////        Mockito.when(userService.getUsers(0, 10, "nama","ASC", "Bearer "+ jwtToken))
-////            .thenReturn(usersPage);
-//
-//            MvcResult mvcResult = (MvcResult) mockMvc.perform(request).andDo(print()).andExpect(status().isOk())
-//                                            // .andExpect(jsonPath("$.content[0].nama").value("nama"))
-//                                            // .andExpect(jsonPath("$.content[1].nama").value("namaku"))
-//                                            // .andExpect(jsonPath("$.content[2].nama").value("pojo"))
-//                                            .andReturn();
-//                System.out.println("Generated Token: " + jwtToken);
-//                System.out.println("length of result: " +jsonPath("$.content.length").value(3));
-//                logger.info(mvcResult.getResponse().getContentAsString());
-//
-//
-//    }
+    @Test
+    public void testGetAllUsers() throws Exception {
+
+        User user1 = new User("6713fdd5c84f3816afd57d27", "nama", "871356389483004", "nama@gmail.com", "ROLE_ADMIN", "nama", "$2a$10$cTHkcddryf1h7F2Y7ETCDu4qgv21ecEVnxz5rzom0IQjU3vRYW2rq");
+        User user2 = new User("6713fe41c84f3816afd57d2a", "namaku", "871356389483004", "namaku@gmail.com", "ROLE_FINANCE", "namaku", "n3004");
+        User user3 = new User("1", "yazid ihsan", "085701701721", "yazidihsan1@gmail.com", "ROLE_ADMIN", "yazid", "RahasiaDong123!@");
+
+        String jwtToken = jwtUtil.generateToken(user3.getUsername(),user3.getRole());
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/users")
+             .header("Authorization","Bearer " + jwtToken)
+             .param("page", "0")
+             .param("size", "10")
+             .param("sortField", "nama")
+             .param("sortDirection", "ASC")
+             .accept(MediaType.APPLICATION_JSON)
+             .contentType(MediaType.APPLICATION_JSON);
+
+             List<User> users = Arrays.asList(user1,user2,user3);
+
+        usersPage = new PageImpl<>(users, PageRequest.of(0, 10), users.size());
+
+        Mockito.when(userService.getUsers(0, 10, "nama","ASC", "Bearer "+ jwtToken))
+            .thenReturn(usersPage);
+
+            MvcResult mvcResult = (MvcResult) mockMvc.perform(request).andDo(print()).andExpect(status().isOk())
+                                            // .andExpect(jsonPath("$.content[0].nama").value("nama"))
+                                            // .andExpect(jsonPath("$.content[1].nama").value("namaku"))
+                                            // .andExpect(jsonPath("$.content[2].nama").value("pojo"))
+                                            .andReturn();
+                System.out.println("Generated Token: " + jwtToken);
+                System.out.println("length of result: " +jsonPath("$.content.length").value(3));
+                logger.info(mvcResult.getResponse().getContentAsString());
+
+
+    }
 
      @Test
     public void testCreateUser_Success() throws Exception {
